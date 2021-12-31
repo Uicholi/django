@@ -1,0 +1,21 @@
+{% extends 'sc/base.html' %}
+
+{% block content %}
+
+    <p1>Схемы</p1>
+    <div class="row">
+        {% for v in vendor  %}
+        <a href="{% url 'schematic' %}{{v.vendor}}" class="col-3 m-2 btn btn-secondary">{{v.vendor}}</a>
+        {% endfor %}
+
+    </div>
+
+    <div class="row">
+        {% for v in schematics  %}
+        <a href="{{v.file.url}}" class="col-1" >{{v.model}}</a>
+        {% endfor %}
+    </div>
+
+
+    <a href="{% url 'addschema' %}" class="btn btn-warning"> Добавить схему </a>
+{% endblock %}

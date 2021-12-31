@@ -1,0 +1,33 @@
+{% extends 'sc/base.html' %}
+
+{% block content %}
+<h1>Новый заказ</h1>
+<form action="{% url 'addorder' %}" method="post">
+  {% csrf_token %}
+  <div class="row">
+
+    <div class="col-md-10 mx-auto">
+      {{ form.clients.label_tag }}
+      {{ form.clients }}
+      {{ form.devices.label_tag }}
+      {{ form.devices }}
+      {{ form.manufactured.label_tag }}
+      {{ form.manufactured }}
+      {{ form.model.label_tag }}
+      {{ form.model }}
+      {{ form.serial.label_tag }}
+      {{ form.serial }}
+      {{ form.bug.label_tag }}
+      {{ form.bug }}
+      {{ form.stage.label_tag }}
+      {{ form.stage }}
+    </div>
+
+</div>
+  <br>
+
+  <input type="submit" value="Создать">
+
+</form>
+
+{% endblock %}

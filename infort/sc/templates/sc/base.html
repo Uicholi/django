@@ -1,0 +1,111 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{% static 'sc/css/style.css' %}">
+    <title>{{title}}</title>
+</head>
+<body>
+ <header class="py-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <img class="bi me-2" width="40" height="32" role="img" src="{% static 'sc/images/logo.png' %}" alt="#">
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'home' %}" class="nav-link px-3 text-white">Домашняя</a></li>
+          <li><a href="{% url 'service' %}" class="nav-link px-3 text-white">Сервис</a></li>
+          <li><a href="{% url 'schematic' %}" class="nav-link px-3 text-white">Схемы</a></li>
+          <li><a href="#" class="nav-link px-3 text-white">FAQs</a></li>
+          <li><a href="#" class="nav-link px-3 text-white">About</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="text-end">
+          {% if request.user.is_authenticated %}
+
+            <p>{{ user.username }}</p>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Выйти</a>
+
+          {% else %}
+            <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Логин</a>
+            <a href="{% url 'register' %}" class="btn btn-warning">Регистрация</a>
+          {% endif %}
+
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 text-center">
+
+                <a href="#" class="btn btn-light my-1 mt-3" style="width: 100%">qweqwe</a><br>
+                <a href="#" class="btn btn-light my-1" style="width: 100%">qweqwe</a><br>
+                <a href="#" class="btn btn-light my-1" style="width: 100%">qweqwe</a><br>
+
+<!--                кнопки-->
+                 <div class="btn-group dropend my-1" style="width: 100%">
+                  <button type="button" class="btn btn-light dropdown-toggle " data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                    Добавить элемент
+                  </button>
+                      <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <li><button class="dropdown-item" type="button">Action</button></li>
+                        <li><button class="dropdown-item" type="button">Another action</button></li>
+                        <li><button class="dropdown-item" type="button">Something else here</button></li>
+                      </ul>
+                  </div>
+            </div>
+
+            <div class="col-9">
+
+
+                    {% block content %}
+                    {% endblock %}
+
+<!--                    пагинация-->
+{% if page_obj.has_other_pages %}
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+      {% for n in paginator.page_range %}
+          {% if page_obj.number == n %}
+              <li class="page-item disabled" aria-current="page">
+                <a class="page-link" href="#" aria-disabled="true">{{ n }}</a>
+              </li>
+          {% elif n >= page_obj.number|add:-2 and n <= page_obj.number|add:2  %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{n}}">{{ n }}</a>
+            </li>
+          {% endif %}
+      {% endfor %}
+  </ul>
+</nav>
+{% endif %}
+
+
+<!--                конец пагинации-->
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% extends 'sc/base.html' %}
+
+{% block content %}
+<!--Кнопки-->
+<div class="row">
+    <div class="col-11">
+      <div class="row">
+          {% for stage in stages %}
+            <div class="col-md-auto">
+              <a href="{% url 'services' stage.slug %}" class="btn btn-{{stage.bs_color}}  m-2">{{ stage }}</a>
+            </div>
+          {% endfor %}
+      </div>
+    </div>
+  <div class="col-1">
+<a href="{% url 'addorder' %}" class="btn btn-danger m-2 ">Заказ+</a>
+    </div>
+</div>
+<!--Таблица-->
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Клиент</th>
+      <th scope="col">Устройство</th>
+      <th scope="col">Стадия ремонта</th>
+    </tr>
+  </thead>
+  <tbody>
+        {% for v in services %}
+          <tr>
+            <th><a href="{% url 'order' v.id %}">{{ v.id }}</a></th>
+            <td>{{ v.clients }}</td>
+            <td>{{ v.devices }}</td>
+            <td>{{ v.stage }}</td>
+          </tr>
+        {% endfor %}
+
+  </tbody>
+</table>
+
+
+
+{% endblock %}
